@@ -32,3 +32,12 @@
     transform: translate(-50%, -50%);
     color: whitesmoke;
 }
+/* second background image */
+.bg2image {
+    height:100vh;
+    background: url('images/pichillemu-surf.jpg');
+    background-size:cover;
+    position:relative;
+    padding: 0;
+    margin: 0;
+}

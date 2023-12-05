@@ -10,11 +10,12 @@
 /* hero background image */
 .bgimage {
     height:100vh;
-    background: url('images/2015-walking-pichilemu-2.jpg');
+    background: url('images/ryan&raphonthebeach.jpg');
     background-size:cover;
     position:relative;
     padding: 0;
     margin: 0;
+    
 }
 /* text css above hero image*/
 .hero_title {
@@ -32,12 +33,13 @@
     transform: translate(-50%, -50%);
     color: whitesmoke;
 }
-/* second background image */
-.bg2image {
-    height:100vh;
-    background: url('images/pichillemu-surf.jpg');
-    background-size:cover;
+
+#about {
+    background-image: url('images/ryan&raphainthepark.jpg');
+    background-size: cover;
     position:relative;
-    padding: 0;
-    margin: 0;
-}
+    background-repeat: no-repeat;
+    padding: 50px;
+    
+  }
+  

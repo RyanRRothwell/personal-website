@@ -1,4 +1,4 @@
- name: Deploy to Azure Storage
+name: Deploy to Azure Storage
 
 on:
   push:

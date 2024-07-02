@@ -1,59 +1,127 @@
-/* spacing on all sections */
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
 .section {
-    margin-top: 4rem;
-    padding-top: 4rem;
+  margin-top: 4rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
-.section:last-of-type {
-    padding-bottom: 4rem;
+
+/* Navbar styles */
+.navbar {
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: background-color 0.3s ease;
 }
-    
-/* hero background image */
+
+.navbar-brand {
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-link {
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #007bff;
+}
+
+/* Hero section styles */
 .bgimage {
-    height:100vh;
-    background: url('images/ryan&raphonthebeach.jpg');
-    background-size:cover;
-    position:relative;
-    padding: 0;
-    margin: 0;
-    
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/ryan&raphonthebeach.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/* text css above hero image*/
+
+.hero_text {
+  text-align: center;
+  color: white;
+}
+
 .hero_title {
-    padding-top: 10rem;
-    font-size: 4.5rem;
+  font-size: 4.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
+
 .hero_desc {
-    font-size: 2rem;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
-/* contact background image */
+/* About section styles */
+#about img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+#about p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Contact section styles */
 .contact-image {
-    height:100vh;
-    background: url('images/ryan&raphainthepark-3.jpg');
-    background-size:cover;
-    position:relative;
-    padding: 0;
-    margin: 0;
-    
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/ryan&raphainthepark-3.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 4rem 0;
 }
-.social-links {
-    margin: 15% 25%;
 
+.contact-form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.contact-form h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.social-links {
+  list-style-type: none;
+  padding: 0;
+}
+
+.social-links li {
+  margin-bottom: 1rem;
+}
+
+.social-links a {
+  color: white;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #007bff;
+}
+
+.social-links i {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .hero_title {
+      font-size: 3rem;
   }
-  .social-links li {
-    list-style-type: none;
-    font-size: 18px; /* Adjust font-size as needed */
-    margin-bottom: 10px;
+  .hero_desc {
+      font-size: 1.5rem;
   }
-  .social-links a {
-    font-size: 24px; /* Adjust font-size as needed */
-    color: #000000;
-  }
-  
-  .social-links i {
-    font-size: 32px; /* Adjust icon size as needed */
-    color: #ffffff;
-    padding: 10px;
-  }
-  
-  
+}

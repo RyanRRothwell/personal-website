@@ -1,50 +1,41 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+const greetingElement = document.getElementById('greeting');
+let isSpanish = false;
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Navbar color change on scroll
-window.addEventListener('scroll', function() {
-    if (window.scrollY > 50) {
-        document.querySelector('.navbar').style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-    } else {
-        document.querySelector('.navbar').style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
-    }
-});
-
-// Active state for navbar items
-window.addEventListener('scroll', function() {
-    let scrollPosition = window.scrollY;
-
-    document.querySelectorAll('section').forEach(section => {
-        if (scrollPosition >= section.offsetTop - 100 && scrollPosition < (section.offsetTop + section.offsetHeight - 100)) {
-            let currentId = section.attributes.id.value;
-            removeAllActiveClasses();
-            addActiveClass(currentId);
-        }
-    });
-});
-
-function removeAllActiveClasses() {
-    document.querySelectorAll(".nav-link").forEach((el) => {
-        el.classList.remove("active");
-    });
+function setLanguage() {
+    const language = navigator.language || navigator.userLanguage;
+    isSpanish = language.startsWith('es');
 }
 
-function addActiveClass(id) {
-    let selector = `.navbar-nav .nav-link[href="#${id}"]`;
-    document.querySelector(selector).classList.add("active");
+function updateGreeting(message) {
+    greetingElement.textContent = message;
 }
 
-// Form submission (you'll need to implement the actual form submission logic)
-document.querySelector('form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    // Add your form submission logic here
-    alert('Form submitted! (This is a placeholder - implement your actual form submission logic)');
-});
+function animateGreetings() {
+    const greetings = isSpanish
+        ? [
+            "Hola Mundo",
+            "Bienvenidos a ",
+            "Mi página web",
+            "Espero que disfrutes",
+            "Tu visita"
+        ]
+        : [
+            "Hello World",
+            "Welcome to",
+            "My website",
+            "I hope you enjoy",
+            "Your visit"
+        ];
+
+    greetings.forEach((greeting, index) => {
+        setTimeout(() => {
+            updateGreeting(greeting);
+        }, index * 3000); // Change every 3 seconds
+    });
+
+    // Restart the animation after all greetings have been shown
+    setTimeout(animateGreetings, greetings.length * 3000);
+}
+
+setLanguage();
+animateGreetings();

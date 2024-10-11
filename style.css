@@ -1,127 +1,25 @@
-/* General styles */
 body {
-  font-family: 'Arial', sans-serif;
-}
-
-.section {
-  margin-top: 4rem;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
-/* Navbar styles */
-.navbar {
-  background-color: rgba(255, 255, 255, 0.9);
-  transition: background-color 0.3s ease;
-}
-
-.navbar-brand {
-  font-weight: bold;
-  color: #333;
-}
-
-.nav-link {
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.nav-link:hover, .nav-link.active {
-  color: #007bff;
-}
-
-/* Hero section styles */
-.bgimage {
-  height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/ryan&raphonthebeach.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero_text {
-  text-align: center;
-  color: white;
-}
-
-.hero_title {
-  font-size: 4.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.hero_desc {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
-/* About section styles */
-#about img {
-  max-width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
-}
-
-#about p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-/* Contact section styles */
-.contact-image {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('images/ryan&raphainthepark-3.jpg');
-  background-size: cover;
-  background-position: center;
-  color: white;
-  padding: 4rem 0;
-}
-
-.contact-form {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 2rem;
-  border-radius: 10px;
-}
-
-.contact-form h2 {
-  color: #333;
-  margin-bottom: 1.5rem;
-}
-
-.social-links {
-  list-style-type: none;
+  margin: 0;
   padding: 0;
-}
-
-.social-links li {
-  margin-bottom: 1rem;
-}
-
-.social-links a {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
   color: white;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: color 0.3s ease;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
 }
 
-.social-links a:hover {
-  color: #007bff;
+#greeting {
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.social-links i {
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-  .hero_title {
-      font-size: 3rem;
-  }
-  .hero_desc {
-      font-size: 1.5rem;
+@media (max-width: 600px) {
+  body {
+      font-size: 18px;
   }
 }

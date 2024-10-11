@@ -8,7 +8,8 @@ body {
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
-  font-size: 24px;
+  font-size: 48px;
+  transition: background-image 0.5s ease-in-out;
 }
 
 #greeting {
@@ -18,8 +19,83 @@ body {
   box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
+#about-me {
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+
+#about-me h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+#about-me p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 10px 15px;
+  border: 1px solid white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.social-links a:hover {
+  background-color: white;
+  color: black;
+}
+
+.static-page {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
   body {
-      font-size: 18px;
+      font-size: 24px;
+  }
+
+  .static-page {
+      background-image: url('mobile-background.jpg');
+  }
+
+  #about-me {
+      width: 90%;
+  }
+
+  #about-me h1 {
+      font-size: 28px;
+  }
+
+  #about-me p {
+      font-size: 16px;
+  }
+
+  .social-links a {
+      font-size: 14px;
+      padding: 8px 12px;
+  }
+}
+
+@media (min-width: 769px) {
+  .static-page {
+      background-image: url('desktop-background.jpg');
   }
 }

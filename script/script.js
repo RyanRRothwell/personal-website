@@ -1,4 +1,5 @@
 const greetingElement = document.getElementById('greeting');
+const aboutMeElement = document.getElementById('about-me');
 let isSpanish = false;
 
 function setLanguage() {
@@ -10,21 +11,25 @@ function updateGreeting(message) {
     greetingElement.textContent = message;
 }
 
+function showAboutMe() {
+    greetingElement.style.display = 'none';
+    aboutMeElement.style.display = 'block';
+    document.body.classList.add('static-page');
+}
+
 function animateGreetings() {
     const greetings = isSpanish
         ? [
             "Hola Mundo",
-            "Bienvenidos a ",
-            "Mi página web",
-            "Espero que disfrutes",
-            "Tu visita"
+            "Bienvenidos a mi página web",
+            "¿Cómo puedo ayudarte hoy?",
+            "Espero que disfrutes tu visita"
         ]
         : [
             "Hello World",
-            "Welcome to",
-            "My website",
-            "I hope you enjoy",
-            "Your visit"
+            "Welcome to my website",
+            "How can I help you today?",
+            "I hope you enjoy your visit"
         ];
 
     greetings.forEach((greeting, index) => {
@@ -33,8 +38,8 @@ function animateGreetings() {
         }, index * 3000); // Change every 3 seconds
     });
 
-    // Restart the animation after all greetings have been shown
-    setTimeout(animateGreetings, greetings.length * 3000);
+    // Show about me section after all greetings have been shown
+    setTimeout(showAboutMe, greetings.length * 3000);
 }
 
 setLanguage();

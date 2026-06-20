@@ -17,16 +17,38 @@ jobs:
           project_id: '${{ secrets.GCP_PROJECT_ID }}'
       - name: Deploy e2-micro VM
         run: |
+          run: |
+          # === 1. Create custom VPC (if it doesn't exist) ===
+          if ! gcloud compute networks describe my-dualstack-vpc --quiet > /dev/null 2>&1; then
+            echo "Creating custom VPC..."
+          gcloud compute networks create my-dualstack-vpc \
+            --subnet-mode=custom
+          fi
+
+          # === 2. Create dual-stack subnet (if it doesn't exist) ===
+          if ! gcloud compute networks subnets describe dualstack-subnet --region=us-east1 --quiet > /dev/null 2>&1; then
+            echo "Creating dual-stack subnet..."
+            gcloud compute networks subnets create dualstack-subnet \
+              --network=my-dualstack-vpc \
+              --region=us-east1 \
+              --range=10.0.0.0/24 \          # Your IPv4 CIDR
+              --stack-type=IPV4_IPV6 \
+              --ipv6-access-type=EXTERNAL     # This gives public IPv6
+          fi
+
+          # === 3. Create the VM ===
           if gcloud compute instances describe www-ryanrothwell-ca --zone=us-east1-b > /dev/null 2>&1; then
-            echo "VM already exists. If you want to rebuild, delete it in GCP first."
+            echo "VM already exists..."
           else
-            echo "Creating new Rocky Linux VM..."
+            echo "Creating new Rocky Linux dual-stack VM..."
             gcloud compute instances create www-ryanrothwell-ca \
               --zone=us-east1-b \
               --machine-type=e2-micro \
-              --subnet=default \
+              --subnet=dualstack-subnet \
+              --network=my-dualstack-vpc \
               --tags=http-server,https-server \
-              --stack-type=IPV4_IPV6 \
+              --stack-type=IPV4_IPV6 \           # Required
+              --ipv6-network-tier=PREMIUM \      # Better performance (recommended)
               --image-family=rocky-linux-9-optimized-gcp \
               --image-project=rocky-linux-cloud \
               --metadata-from-file=user-data=infrastructure/cloud-init.yaml

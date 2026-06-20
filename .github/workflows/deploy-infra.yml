@@ -1,0 +1,33 @@
+name: Deploy GCP Infrastructure
+on:
+  workflow_dispatch:
+jobs:
+  deploy-vm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: '${{ secrets.GCP_PROJECT_ID }}'
+      - name: Deploy e2-micro VM
+        run: |
+          if gcloud compute instances describe www-ryanrothwell-ca --zone=us-east1-b > /dev/null 2>&1; then
+            echo "VM already exists. If you want to rebuild, delete it in GCP first."
+          else
+            echo "Creating new Rocky Linux VM..."
+            gcloud compute instances create www-ryanrothwell-ca \
+              --zone=us-east1-b \
+              --machine-type=e2-micro \
+              --subnet=default \
+              --tags=http-server,https-server \
+              --stack-type=IPV4_IPV6 \
+              --image-family=rocky-linux-9-optimized-gcp \
+              --image-project=rocky-linux-cloud \
+              --metadata-from-file=user-data=infrastructure/cloud-init.yaml
+          fi

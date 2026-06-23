@@ -7,8 +7,8 @@ users:
     lock_passwd: false
     passwd: '$6$tspU12IF1gAnoagy$Wit5znedzH/5UVP2Atqh3b6ZxOdQihjShuiJMKecJwFmm1zElFQLIXSYDJdCTWSmxiAPfjXVwrn7J5mThEnlK0'
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFqDX9cCyisQ2R34wJzelFCCfUQEfENEtlSUTjCxFZR/ ryan@ryanrothwell.ca
-
+     ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYx2EfuMsToJQBTLSnLU/iyIhM9QLhWKO9G0mnd4jZo ryan@ryanrothwell.ca
+     
 packages:
   - nginx
   - epel-release

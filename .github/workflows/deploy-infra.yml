@@ -1,51 +1,41 @@
 name: Deploy GCP Infrastructure
-on:
-  workflow_dispatch:
+on: workflow_dispatch
+
 jobs:
   deploy-vm:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v2
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: '${{ secrets.GCP_PROJECT_ID }}'
-      - name: Deploy Infrastructure
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build Clean Infrastructure
         run: |
-          # 1. Create VPC (if not exists)
-          if ! gcloud compute networks describe my-dualstack-vpc --quiet > /dev/null 2>&1; then
-            echo "Creating custom VPC..."
-            gcloud compute networks create my-dualstack-vpc --subnet-mode=custom
-          fi
+          # 1. Create custom VPC
+          gcloud compute networks create my-dualstack-vpc --subnet-mode=custom --quiet || true
 
-          # 2. Create dual-stack subnet (if not exists)
-          if ! gcloud compute networks subnets describe dualstack-subnet --region=us-east1 --quiet > /dev/null 2>&1; then
-            echo "Creating dual-stack subnet..."
-            gcloud compute networks subnets create dualstack-subnet \
-              --network=my-dualstack-vpc \
-              --region=us-east1 \
-              --range=10.0.0.0/24 \
-              --stack-type=IPV4_IPV6 \
-              --ipv6-access-type=EXTERNAL
-          fi
+          # 2. Create Subnet (needed for the VM)
+          gcloud compute networks subnets create dualstack-subnet \
+            --network=my-dualstack-vpc \
+            --region=us-east1 \
+            --range=10.0.0.0/24 \
+            --quiet || true
 
-          # 3. Create the VM
-          if gcloud compute instances describe www-ryanrothwell-ca --zone=us-east1-b > /dev/null 2>&1; then
-            echo "VM already exists..."
-          else
-            echo "Creating new Rocky Linux dual-stack VM..."
-            gcloud compute instances create www-ryanrothwell-ca \
-              --zone=us-east1-b \
-              --machine-type=e2-micro \
-              --subnet=dualstack-subnet \
-              --tags=http-server,https-server \
-              --stack-type=IPV4_IPV6 \
-              --image-family=rocky-linux-9-optimized-gcp \
-              --image-project=rocky-linux-cloud \
-              --metadata-from-file=user-data=infrastructure/cloud-init.yaml
-          fi
+          # 3. CRITICAL: Firewall Rule (Without this, you cannot SSH)
+          gcloud compute firewall-rules create allow-ssh-ingress \
+            --network=my-dualstack-vpc \
+            --allow=tcp:22 \
+            --source-ranges=0.0.0.0/0 \
+            --quiet || true
+
+          # 4. Create the VM
+          # We use --no-user-output-enabled to keep logs clean
+          gcloud compute instances create www-ryanrothwell-ca \
+            --zone=us-east1-b \
+            --machine-type=e2-micro \
+            --subnet=dualstack-subnet \
+            --image-family=rocky-linux-9-optimized-gcp \
+            --image-project=rocky-linux-cloud \
+            --quiet
